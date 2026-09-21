@@ -1,0 +1,290 @@
+platform is continuous rather than static.
+
+54. DO NOT OVERBUILD
+
+The prototype should prioritize these features above everything else:
+
+Tier 1 — MUST WORK
+Executive dashboard
+Risk quantification
+Financial exposure
+Asset criticality
+Control effectiveness
+Risk drivers
+What-if scenarios
+Investment optimization
+AI assistant
+Continuous event simulation
+Tier 2 — SHOULD WORK
+Compliance mapping
+Technical dashboard
+Asset drill-down
+Vulnerability drill-down
+Threat intelligence
+Reports
+Tier 3 — ARCHITECTURE READY
+Real SIEM integrations
+Real EDR integrations
+Real IAM integrations
+Real CSPM integrations
+Kafka streaming
+Production authentication
+Multi-tenancy
+
+Do not sacrifice Tier 1 quality to implement superficial Tier 3 integrations.
+
+55. CODE QUALITY REQUIREMENTS
+
+Use a clean repository structure.
+
+Backend:
+
+backend/
+    main.py
+    database/
+    models/
+    schemas/
+    api/
+    services/
+        risk_engine/
+        financial_engine/
+        scenario_engine/
+        optimization/
+        compliance/
+        ai/
+        ingestion/
+    utils/
+    tests/
+
+Frontend:
+
+frontend/
+    src/
+        components/
+        pages/
+        layouts/
+        hooks/
+        services/
+        types/
+        charts/
+        stores/
+
+Keep business logic out of React components.
+
+Keep database logic out of route handlers where practical.
+
+Use service classes/functions.
+
+Document important formulas.
+
+56. ERROR HANDLING
+
+Never show raw stack traces to users.
+
+Use polished error messages.
+
+Example:
+
+Unable to complete simulation.
+
+The risk engine encountered a temporary
+calculation error. Please retry.
+
+Log technical errors server-side.
+
+57. EMPTY / LOADING STATES
+
+Every dashboard should have:
+
+skeleton loading
+empty state
+error state
+
+Do not leave blank screens.
+
+58. RESPONSIVE DESIGN
+
+The primary target is desktop because this is an enterprise dashboard.
+
+But it should still work on:
+
+1440px
+1280px
+1024px
+tablet widths
+59. FINAL ACCEPTANCE CRITERIA
+
+Before considering the project complete, verify:
+
+Frontend
+
+polished enterprise UI
+
+responsive
+
+no broken routes
+
+no placeholder screens
+
+all major buttons work
+
+charts render correctly
+
+drill-down works
+
+filters work
+
+scenario simulation works
+
+optimizer works
+
+AI assistant works
+
+Backend
+
+API starts successfully
+
+database initializes
+
+seed data loads
+
+risk engine works
+
+financial model works
+
+Monte Carlo works
+
+scenario engine works
+
+optimizer works
+
+compliance mapping works
+
+ingestion event updates risk
+
+Demo
+
+new vulnerability can be simulated
+
+risk changes
+
+EAL changes
+
+risk drivers change
+
+mitigation scenario works
+
+investment optimization works
+
+AI explains results
+
+compliance can be demonstrated
+
+60. FINAL PRODUCT REQUIREMENT
+
+The final application should communicate one simple idea immediately:
+
+"Cybersecurity teams collect thousands of technical signals. CyberRiskIQ turns those signals into financial risk, explains what is driving that risk, simulates what could reduce it, and determines how to allocate a limited security budget."
+
+The product should demonstrate this entire chain:
+
+SECURITY TELEMETRY
+        ↓
+BUSINESS CONTEXT
+        ↓
+ASSET CRITICALITY
+        ↓
+THREAT + VULNERABILITY ANALYSIS
+        ↓
+CONTROL EFFECTIVENESS
+        ↓
+INCIDENT LIKELIHOOD
+        ↓
+FINANCIAL IMPACT
+        ↓
+MONTE CARLO
+        ↓
+EXPECTED ANNUAL LOSS
+        ↓
+RISK DRIVERS
+        ↓
+MITIGATION OPTIONS
+        ↓
+WHAT-IF SIMULATION
+        ↓
+BUDGET OPTIMIZATION
+        ↓
+ROSI
+        ↓
+COMPLIANCE IMPACT
+        ↓
+AI EXPLANATION
+        ↓
+EXECUTIVE DECISION
+        ↓
+REMEDIATION
+        ↓
+CONTINUOUS RE-MEASUREMENT
+
+This chain is the central product architecture.
+
+61. STARTUP REQUIREMENT
+
+When I run the Replit project, I should be able to:
+
+Start the application.
+See the CyberRiskIQ login/demo entry.
+Enter Demo Mode.
+Immediately see a populated enterprise dashboard.
+Navigate every major section.
+Run a scenario.
+Run an investment optimization.
+Ask the AI assistant questions.
+Trigger a simulated security event.
+Observe risk recalculation.
+Inspect the affected asset.
+View compliance impact.
+
+There must be NO requirement to manually populate the database before the demo.
+
+Automatically seed the demo organization and data on first startup.
+
+62. PRIORITY ORDER IF DEVELOPMENT TIME IS LIMITED
+
+If some features cannot be completed, prioritize in this order:
+
+Executive dashboard
+Risk quantification engine
+EAL / VaR
+Risk drivers
+Scenario simulator
+Investment optimizer
+Asset drill-down
+AI assistant
+Continuous event simulation
+Compliance
+Technical dashboards
+Reports
+Additional integrations
+
+Do not build a beautiful frontend with fake calculations.
+
+The calculations and interactions must work.
+
+Do not build a complicated backend with an unusable frontend.
+
+The product must balance:
+
+technical credibility + visual polish + ease of use + demonstrable business value.
+
+63. FIRST ACTION
+
+Start by creating the complete application structure, database schema, seed data generator, FastAPI backend, React frontend, risk engine, scenario engine, optimization engine, and dashboard.
+
+Then run the application and verify that the complete demo journey works end-to-end.
+
+If a dependency is unavailable, implement a compatible fallback rather than leaving a feature broken.
+
+Do not stop after creating a design mockup.
+
+Build the actual working prototype.

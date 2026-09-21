@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Threat Quotient"
+description = "A working cyber risk quantification and investment optimization prototype for NovaBank Financial Services. It converts simulated security telemetry into modeled financial exposure, live risk drivers, mitigation scenarios, optimized budget decisions, and executive explanations."
+version = "1.0.0"
+id = "artifacts/threat-quotient"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23834
+
+[services.development]
+run = "pnpm --filter @workspace/threat-quotient run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/threat-quotient", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/threat-quotient/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23834"
+BASE_PATH = "/"

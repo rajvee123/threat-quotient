@@ -1,0 +1,167 @@
+37. RISK COLOR LANGUAGE
+
+Use consistent semantic colors.
+
+Critical:
+
+red
+
+High:
+
+orange
+
+Moderate:
+
+yellow
+
+Low:
+
+green
+
+But don't make the entire UI red.
+
+Use colors sparingly.
+
+38. LANDING / OVERVIEW EXPERIENCE
+
+When the judge opens the app, they should immediately understand:
+
+What is this?
+
+"Continuous Cyber Risk Quantification & Investment Optimization"
+
+What does it do?
+
+"Transforms security telemetry into financial exposure and optimized security investment decisions."
+
+Why is it valuable?
+
+"Connects cybersecurity operations with executive decision-making."
+
+Display this as a concise subtitle.
+
+39. DEMO MODE
+
+Create a clearly visible:
+
+"DEMO ENVIRONMENT"
+
+indicator.
+
+Add a top-right control:
+
+Demo Mode
+● Live Simulation
+
+This avoids implying that the prototype is connected to a real bank.
+
+40. DEMO CONTROL PANEL
+
+Create a small hidden/advanced panel accessible from:
+
+Demo Controls
+
+Options:
+
+Trigger Critical Vulnerability
+Trigger Ransomware Incident
+Increase Threat Activity
+Decrease MFA Coverage
+Improve EDR Coverage
+Add Internet-Facing Asset
+Resolve Critical Vulnerability
+
+This allows judges to see the platform react dynamically.
+
+41. PRE-BUILT DEMO SCENARIOS
+
+Include buttons:
+
+Scenario 1
+
+"Critical CVE on Payment Server"
+
+Scenario 2
+
+"Privileged Account Compromise"
+
+Scenario 3
+
+"Ransomware Exposure"
+
+Scenario 4
+
+"30-Day Remediation Delay"
+
+Scenario 5
+
+"₹1 Crore Security Budget"
+
+Each should load a meaningful scenario.
+
+42. 30-DAY DELAY SIMULATION
+
+Implement:
+
+Current risk
+vs
+7-day delay
+vs
+15-day delay
+vs
+30-day delay
+vs
+60-day delay
+
+Display the financial exposure curve.
+
+Example:
+
+Day 0     ₹8.2Cr
+Day 7     ₹8.4Cr
+Day 15    ₹8.7Cr
+Day 30    ₹9.4Cr
+Day 60    ₹10.6Cr
+
+Use model-generated numbers, not hardcoded display-only values.
+
+43. INVESTMENT CURVE
+
+Show:
+
+Financial Exposure
+│
+│ ●
+│   ●
+│     ●
+│       ●
+│          ●
+│              ●
+└────────────────────────
+      Security Investment
+
+Add hover information.
+
+Example:
+
+Investment: ₹75L
+Modeled EAL: ₹5.8Cr
+Risk Reduction: ₹2.4Cr
+Marginal benefit: ₹X/Lakh
+44. BOARD REPORT
+
+Add:
+
+Generate Executive Report
+
+Create a clean summary containing:
+
+enterprise EAL
+VaR
+top risk drivers
+current control effectiveness
+recommended investment portfolio
+modeled risk reduction
+compliance summary
+
+If PDF generation is difficult, generate a downloadable HTML/CSV/JSON report first, but prioritize PDF if feasible.

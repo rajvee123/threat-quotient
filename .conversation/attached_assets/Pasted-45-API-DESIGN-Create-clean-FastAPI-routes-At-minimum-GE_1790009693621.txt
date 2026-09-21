@@ -1,0 +1,293 @@
+45. API DESIGN
+
+Create clean FastAPI routes.
+
+At minimum:
+
+GET /api/overview
+
+GET /api/risk/enterprise
+GET /api/risk/business-units
+GET /api/risk/services
+GET /api/risk/assets
+
+GET /api/risk/drivers
+GET /api/risk/trends
+
+GET /api/assets
+GET /api/assets/{id}
+
+GET /api/vulnerabilities
+GET /api/vulnerabilities/{id}
+
+GET /api/controls
+GET /api/controls/{id}
+
+GET /api/incidents
+GET /api/threats
+
+POST /api/scenarios
+POST /api/scenarios/simulate
+
+POST /api/optimization
+
+GET /api/compliance
+GET /api/compliance/{framework}
+
+POST /api/ingest/event
+
+POST /api/copilot/query
+
+GET /api/notifications
+
+Use Pydantic schemas.
+
+Return proper HTTP errors.
+
+46. FRONTEND STATE MANAGEMENT
+
+Use a clean state-management approach.
+
+React Query / TanStack Query is preferred.
+
+Use:
+
+loading states
+error states
+empty states
+optimistic updates where appropriate
+cached queries
+refetch after simulation/event ingestion
+
+Do not hardcode dashboard values in React components.
+
+The frontend should fetch them from APIs.
+
+47. PERFORMANCE
+
+The prototype should feel fast.
+
+Do NOT run a 5,000-iteration Monte Carlo simulation every time the user opens a dashboard page.
+
+Precompute baseline risk results.
+
+Run Monte Carlo asynchronously or cache results.
+
+Only run simulations when:
+
+scenario changes
+risk-relevant telemetry changes
+user explicitly requests simulation
+
+Use caching.
+
+48. SECURITY
+
+Implement basic secure engineering practices.
+
+environment variables for secrets
+never expose API keys in frontend
+backend-only AI API calls
+input validation
+SQL injection protection through ORM
+CORS configuration
+basic authentication if feasible
+audit logging
+no real personal data
+no real banking data
+49. TESTING
+
+Create backend tests for:
+
+Risk engine
+asset criticality
+control effectiveness
+likelihood
+financial impact
+EAL
+VaR
+aggregation
+Optimization
+
+Test:
+
+Budget = ₹0
+Budget = ₹50L
+Budget = ₹1Cr
+Budget = ₹5Cr
+
+Ensure selected actions never exceed the budget.
+
+Scenario engine
+
+Verify:
+
+MFA scenario
+patching scenario
+EDR scenario
+delay scenario
+API
+
+Test major endpoints.
+
+50. IMPORTANT MODELING SAFETY
+
+Never present synthetic model output as real-world fact.
+
+In the UI include a small note:
+
+"Financial exposure figures are modeled estimates generated from simulated enterprise telemetry and configurable assumptions. They are intended for decision support and demonstration."
+
+Use:
+
+Modeled EAL
+
+rather than implying actual financial loss.
+
+51. DEMO DATA ASSUMPTIONS PAGE
+
+Create a page/modal:
+
+"Risk Model Assumptions"
+
+Show:
+
+Incident probability methodology
+Financial impact assumptions
+Downtime cost assumptions
+Data breach assumptions
+Control effectiveness methodology
+Threat weighting
+Monte Carlo parameters
+Optimization objective
+
+This makes the prototype much more credible to technical judges.
+
+52. ARCHITECTURAL TRANSPARENCY PAGE
+
+Create an "Architecture" page or modal showing:
+
+Data Sources
+     ↓
+Ingestion
+     ↓
+Normalization
+     ↓
+Risk Engine
+     ↓
+Financial Quantification
+     ↓
+Optimization
+     ↓
+AI Decision Support
+
+Use a visually polished architecture diagram.
+
+This is useful during judging.
+
+53. THE MOST IMPORTANT DEMO JOURNEY
+
+Optimize the application around this exact 5-minute judge journey.
+
+STEP 1
+
+Open Overview.
+
+Judge immediately sees:
+
+Enterprise EAL: ₹8.2Cr
+VaR: ₹15.4Cr
+Critical Assets: 37
+Control Effectiveness: 78%
+STEP 2
+
+Click:
+
+Top Risk Contributor
+
+Privileged Access.
+
+Show:
+
+₹2.1Cr contribution
+STEP 3
+
+Click:
+
+Why?
+
+Show:
+
+insufficient MFA
+privileged accounts
+critical assets
+internet-facing systems
+STEP 4
+
+Click:
+
+What If?
+
+Select:
+
+100% MFA
+
+Click:
+
+Simulate
+
+Show:
+
+₹8.2Cr → ₹7.1Cr
+STEP 5
+
+Go to:
+
+Investment Optimization
+
+Enter:
+
+₹1 Crore
+
+Click:
+
+Optimize
+
+Show recommended portfolio.
+
+STEP 6
+
+Show:
+
+Investment
+₹95L
+
+Modeled risk reduction
+₹2.2Cr
+STEP 7
+
+Ask CyberRisk Copilot:
+
+"Explain this recommendation to the board."
+
+It should produce a concise executive explanation.
+
+STEP 8
+
+Trigger:
+
+New Critical Vulnerability
+
+Watch:
+
+Event detected
+↓
+Risk recalculation
+↓
+EAL increases
+↓
+New risk driver
+↓
+Recommendation updated
+
+This final step demonstrates the platf

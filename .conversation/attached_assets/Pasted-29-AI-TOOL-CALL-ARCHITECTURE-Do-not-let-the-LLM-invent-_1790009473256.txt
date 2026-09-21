@@ -1,0 +1,233 @@
+29. AI TOOL-CALL ARCHITECTURE
+
+Do not let the LLM invent numerical answers.
+
+Implement tools/functions conceptually like:
+
+get_enterprise_risk()
+get_top_risk_drivers()
+get_asset_risk(asset_id)
+get_vulnerability_risk(vulnerability_id)
+get_risk_trend()
+run_scenario(parameters)
+optimize_budget(budget)
+get_compliance_status(framework)
+get_control_effectiveness(control_id)
+get_business_unit_risk(unit_id)
+
+The LLM calls these tools and explains their results.
+
+If no LLM API is available, implement deterministic intent matching for the demonstration questions.
+
+30. AI ANSWER STYLE
+
+Answers should be concise and executive-friendly.
+
+Example:
+
+User:
+
+What is our biggest financial cyber risk?
+
+Assistant:
+
+Privileged access exposure is currently the
+largest modeled contributor to enterprise cyber
+risk.
+
+Estimated contribution:
+₹2.1 Cr EAL
+
+Primary drivers:
+• 38% of privileged accounts lack MFA
+• 14 high-criticality assets have excessive privileges
+• 3 internet-facing services depend on these accounts
+
+Recommended scenario:
+Expand MFA coverage to 100%.
+
+Estimated investment:
+₹40L
+
+Modeled EAL reduction:
+₹1.1Cr
+
+The assistant should cite the underlying dashboard metric inside the application where practical.
+
+31. DATA INGESTION SIMULATOR
+
+Create a page:
+
+"Data Sources"
+
+Show:
+
+Vulnerability Management       CONNECTED
+SIEM                            CONNECTED
+EDR                             CONNECTED
+IAM                             CONNECTED
+CSPM                            CONNECTED
+Asset Inventory                 CONNECTED
+Threat Intelligence             CONNECTED
+
+These are simulated connectors.
+
+Add:
+
+"Simulate Incoming Event"
+
+User can select:
+
+New Critical Vulnerability
+New SIEM Alert
+MFA Coverage Change
+New Asset
+Threat Intelligence Update
+Incident
+
+Click:
+
+INGEST EVENT
+
+The system should actually update the backend and trigger risk recalculation.
+
+This is extremely important for demonstrating the word:
+
+CONTINUOUS
+
+32. LIVE RISK UPDATE
+
+When a simulated event is ingested:
+
+Display a notification:
+
+NEW SECURITY EVENT
+
+Critical vulnerability detected on
+Payment API Server.
+
+Risk recalculation triggered.
+
+Enterprise EAL:
+₹8.2Cr → ₹8.7Cr
+
++₹50L modeled exposure
+
+Then update dashboard charts.
+
+This should be one of the demo highlights.
+
+33. RISK TIMELINE
+
+Create a timeline:
+
+10:32 AM
+Critical CVE detected
+        ↓
+10:33 AM
+Risk recalculated
+        ↓
+10:34 AM
+New top risk identified
+        ↓
+10:36 AM
+MFA scenario simulated
+        ↓
+10:38 AM
+Investment portfolio optimized
+34. NOTIFICATION CENTER
+
+Create notifications such as:
+
+CRITICAL
+
+3 internet-facing assets now have
+actively exploited vulnerabilities.
+
+HIGH
+
+Privileged access risk increased 8.4%.
+
+OPPORTUNITY
+
+MFA expansion could reduce modeled
+annual exposure by ₹1.1Cr.
+
+COMPLIANCE
+
+7 NIST controls require evidence refresh.
+35. NAVIGATION
+
+Use a clean sidebar.
+
+Suggested navigation:
+
+┌──────────────────────────────┐
+│ CYBERRISKIQ                  │
+│                              │
+│ 🏠 Overview                 │
+│                              │
+│ 📊 Risk Intelligence        │
+│    Enterprise Risk          │
+│    Risk Drivers             │
+│    Risk Trends              │
+│                              │
+│ 🖥 Assets                   │
+│    Asset Inventory          │
+│    Services                │
+│                              │
+│ 🛡 Security                 │
+│    Vulnerabilities          │
+│    Controls                 │
+│    Threats                  │
+│    Incidents                │
+│                              │
+│ 🧪 Simulations              │
+│    What-If Analysis         │
+│                              │
+│ 💰 Investment               │
+│    Optimization             │
+│    ROI / ROSI               │
+│                              │
+│ 📋 Compliance               │
+│                              │
+│ 🤖 CyberRisk Copilot        │
+│                              │
+│ 🔄 Data Sources             │
+│                              │
+│ ⚙ Settings                 │
+└──────────────────────────────┘
+36. VISUAL DESIGN
+
+This is extremely important.
+
+The application should look like a premium cybersecurity enterprise product.
+
+Use:
+
+dark navy / near-black background
+subtle blue/cyan accents
+white/gray typography
+limited use of red/orange only for risk states
+glass-like cards where appropriate
+subtle borders
+strong spacing
+clean typography
+modern icons
+smooth transitions
+
+Avoid:
+
+excessive gradients
+cartoonish illustrations
+huge neon elements
+clutter
+excessive rounded cards
+generic Bootstrap appearance
+
+The visual style should resemble a combination of:
+
+enterprise security operations software
+financial risk analytics
+modern SaaS
+executive intelligence dashboard

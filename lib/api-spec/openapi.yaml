@@ -1,0 +1,706 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Threat Quotient synthetic cyber risk quantification API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+  - name: risk
+  - name: assets
+  - name: security
+  - name: decisions
+  - name: compliance
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /overview:
+    get:
+      operationId: getOverview
+      tags: [risk]
+      summary: Executive risk overview
+      responses:
+        "200":
+          description: Current enterprise overview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Overview"
+  /risk/enterprise:
+    get:
+      operationId: getEnterpriseRisk
+      tags: [risk]
+      summary: Enterprise risk metrics
+      responses:
+        "200":
+          description: Enterprise risk
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnterpriseRisk"
+  /risk/business-units:
+    get:
+      operationId: getBusinessUnitRisk
+      tags: [risk]
+      summary: Risk aggregated by business unit
+      responses:
+        "200":
+          description: Business unit risk
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BusinessUnitRisk"
+  /risk/services:
+    get:
+      operationId: getServiceRisk
+      tags: [risk]
+      summary: Risk aggregated by service
+      responses:
+        "200":
+          description: Service risk
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceRisk"
+  /risk/assets:
+    get:
+      operationId: getAssetRiskList
+      tags: [risk]
+      summary: Risk-ranked asset list
+      parameters:
+        - $ref: "#/components/parameters/BusinessUnit"
+        - $ref: "#/components/parameters/Severity"
+      responses:
+        "200":
+          description: Asset risk
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssetRisk"
+  /risk/drivers:
+    get:
+      operationId: getRiskDrivers
+      tags: [risk]
+      summary: Top financial risk drivers
+      responses:
+        "200":
+          description: Risk drivers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RiskDriver"
+  /risk/trends:
+    get:
+      operationId: getRiskTrends
+      tags: [risk]
+      summary: Modeled risk trend
+      responses:
+        "200":
+          description: Risk trend
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RiskTrend"
+  /assets:
+    get:
+      operationId: getAssets
+      tags: [assets]
+      summary: Asset inventory
+      responses:
+        "200":
+          description: Assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+  /assets/{id}:
+    get:
+      operationId: getAsset
+      tags: [assets]
+      summary: Asset detail
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Asset detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssetDetail"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /vulnerabilities:
+    get:
+      operationId: getVulnerabilities
+      tags: [security]
+      summary: Vulnerability inventory
+      responses:
+        "200":
+          description: Vulnerabilities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vulnerability"
+  /vulnerabilities/{id}:
+    get:
+      operationId: getVulnerability
+      tags: [security]
+      summary: Vulnerability detail
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Vulnerability detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VulnerabilityDetail"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /controls:
+    get:
+      operationId: getControls
+      tags: [security]
+      summary: Control effectiveness
+      responses:
+        "200":
+          description: Controls
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Control"
+  /controls/{id}:
+    get:
+      operationId: getControl
+      tags: [security]
+      summary: Control detail
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Control detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Control"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /incidents:
+    get:
+      operationId: getIncidents
+      tags: [security]
+      summary: Recent incidents
+      responses:
+        "200":
+          description: Incidents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Incident"
+  /threats:
+    get:
+      operationId: getThreats
+      tags: [security]
+      summary: Threat activity
+      responses:
+        "200":
+          description: Threats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Threat"
+  /scenarios/simulate:
+    post:
+      operationId: simulateScenario
+      tags: [decisions]
+      summary: Run a what-if mitigation scenario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScenarioInput"
+      responses:
+        "200":
+          description: Scenario result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScenarioResult"
+  /optimization:
+    post:
+      operationId: optimizeBudget
+      tags: [decisions]
+      summary: Optimize security investment under budget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OptimizationInput"
+      responses:
+        "200":
+          description: Optimization result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OptimizationResult"
+  /compliance:
+    get:
+      operationId: getCompliance
+      tags: [compliance]
+      summary: Compliance posture by framework
+      responses:
+        "200":
+          description: Compliance posture
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ComplianceFramework"
+  /compliance/{framework}:
+    get:
+      operationId: getComplianceFramework
+      tags: [compliance]
+      summary: Framework detail
+      parameters:
+        - name: framework
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Framework detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComplianceFramework"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /ingest/event:
+    post:
+      operationId: ingestEvent
+      tags: [decisions]
+      summary: Ingest a simulated security event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IngestEventInput"
+      responses:
+        "200":
+          description: Updated risk state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IngestResult"
+  /copilot/query:
+    post:
+      operationId: askCopilot
+      tags: [decisions]
+      summary: Ask CyberRisk Copilot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CopilotInput"
+      responses:
+        "200":
+          description: Executive answer grounded in application data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CopilotResponse"
+  /notifications:
+    get:
+      operationId: getNotifications
+      tags: [decisions]
+      summary: Notification center
+      responses:
+        "200":
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    BusinessUnit:
+      name: businessUnit
+      in: query
+      required: false
+      schema:
+        type: string
+    Severity:
+      name: severity
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status: { type: string }
+      required: [status]
+    Error:
+      type: object
+      properties:
+        error: { type: string }
+      required: [error]
+    Overview:
+      type: object
+      required: [organization, enterprise, criticalAssets, controlEffectiveness, lastUpdated, eventCount]
+      properties:
+        organization: { type: string }
+        enterprise: { $ref: "#/components/schemas/EnterpriseRisk" }
+        criticalAssets: { type: integer }
+        controlEffectiveness: { type: number }
+        lastUpdated: { type: string }
+        eventCount: { type: integer }
+    EnterpriseRisk:
+      type: object
+      required: [eal, var95, cvar95, likelihood, riskScore, delta, eventCount]
+      properties:
+        eal: { type: number }
+        var95: { type: number }
+        cvar95: { type: number }
+        likelihood: { type: number }
+        riskScore: { type: number }
+        delta: { type: number }
+        eventCount: { type: integer }
+    BusinessUnitRisk:
+      type: object
+      required: [id, name, eal, riskScore, assetCount, criticalAssets, delta]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        eal: { type: number }
+        riskScore: { type: number }
+        assetCount: { type: integer }
+        criticalAssets: { type: integer }
+        delta: { type: number }
+    ServiceRisk:
+      type: object
+      required: [id, name, businessUnit, eal, riskScore, criticality]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        businessUnit: { type: string }
+        eal: { type: number }
+        riskScore: { type: number }
+        criticality: { type: number }
+    AssetRisk:
+      type: object
+      required: [id, name, service, businessUnit, assetType, criticality, eal, likelihood, controlEffectiveness, severity, internetExposed]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        service: { type: string }
+        businessUnit: { type: string }
+        assetType: { type: string }
+        criticality: { type: number }
+        eal: { type: number }
+        likelihood: { type: number }
+        controlEffectiveness: { type: number }
+        severity: { type: string }
+        internetExposed: { type: boolean }
+    RiskDriver:
+      type: object
+      required: [id, name, category, contribution, share, severity, affectedAssets, explanation]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        contribution: { type: number }
+        share: { type: number }
+        severity: { type: string }
+        affectedAssets: { type: integer }
+        explanation: { type: string }
+    RiskTrend:
+      type: object
+      required: [label, eal, riskScore, eventCount]
+      properties:
+        label: { type: string }
+        eal: { type: number }
+        riskScore: { type: number }
+        eventCount: { type: integer }
+    Asset:
+      allOf:
+        - $ref: "#/components/schemas/AssetRisk"
+    AssetDetail:
+      allOf:
+        - $ref: "#/components/schemas/AssetRisk"
+        - type: object
+          required: [owner, environment, dataSensitivity, vulnerabilities, controls, dependencies, contributions, recommendations]
+          properties:
+            owner: { type: string }
+            environment: { type: string }
+            dataSensitivity: { type: string }
+            vulnerabilities:
+              type: array
+              items: { $ref: "#/components/schemas/Vulnerability" }
+            controls:
+              type: array
+              items: { $ref: "#/components/schemas/Control" }
+            dependencies:
+              type: array
+              items: { type: string }
+            contributions:
+              type: array
+              items: { $ref: "#/components/schemas/Contribution" }
+            recommendations:
+              type: array
+              items: { $ref: "#/components/schemas/MitigationAction" }
+    Contribution:
+      type: object
+      required: [label, value, direction]
+      properties:
+        label: { type: string }
+        value: { type: number }
+        direction: { type: string }
+    Vulnerability:
+      type: object
+      required: [id, cve, title, cvss, severity, exploitAvailable, activelyExploited, affectedAssets, ealContribution, remediationStatus, ageDays]
+      properties:
+        id: { type: string }
+        cve: { type: string }
+        title: { type: string }
+        cvss: { type: number }
+        severity: { type: string }
+        exploitAvailable: { type: boolean }
+        activelyExploited: { type: boolean }
+        affectedAssets: { type: integer }
+        ealContribution: { type: number }
+        remediationStatus: { type: string }
+        ageDays: { type: integer }
+    VulnerabilityDetail:
+      allOf:
+        - $ref: "#/components/schemas/Vulnerability"
+        - type: object
+          required: [affectedServices, affectedBusinessUnits, controls, recommendation]
+          properties:
+            affectedServices:
+              type: array
+              items: { type: string }
+            affectedBusinessUnits:
+              type: array
+              items: { type: string }
+            controls:
+              type: array
+              items: { $ref: "#/components/schemas/Control" }
+            recommendation: { type: string }
+    Control:
+      type: object
+      required: [id, name, category, coverage, configuration, compliance, telemetry, effectiveness, status]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        coverage: { type: number }
+        configuration: { type: number }
+        compliance: { type: number }
+        telemetry: { type: number }
+        effectiveness: { type: number }
+        status: { type: string }
+    Incident:
+      type: object
+      required: [id, type, severity, date, asset, totalLoss, status]
+      properties:
+        id: { type: string }
+        type: { type: string }
+        severity: { type: string }
+        date: { type: string }
+        asset: { type: string }
+        totalLoss: { type: number }
+        status: { type: string }
+    Threat:
+      type: object
+      required: [id, name, category, activityLevel, exploitability, targetSector]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        activityLevel: { type: number }
+        exploitability: { type: number }
+        targetSector: { type: string }
+    MitigationAction:
+      type: object
+      required: [id, name, category, cost, reduction, days, description]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        cost: { type: number }
+        reduction: { type: number }
+        days: { type: integer }
+        description: { type: string }
+    ScenarioInput:
+      type: object
+      required: [actionIds]
+      properties:
+        actionIds:
+          type: array
+          items: { type: string }
+        mfaCoverage: { type: number }
+        delayDays: { type: integer }
+    ScenarioResult:
+      type: object
+      required: [baselineEal, projectedEal, reduction, cost, rosi, actionIds, exposureCurve]
+      properties:
+        baselineEal: { type: number }
+        projectedEal: { type: number }
+        reduction: { type: number }
+        cost: { type: number }
+        rosi: { type: number }
+        actionIds:
+          type: array
+          items: { type: string }
+        exposureCurve:
+          type: array
+          items:
+            $ref: "#/components/schemas/CurvePoint"
+    CurvePoint:
+      type: object
+      required: [label, value]
+      properties:
+        label: { type: string }
+        value: { type: number }
+    OptimizationInput:
+      type: object
+      required: [budget]
+      properties:
+        budget: { type: number, minimum: 0 }
+    OptimizationResult:
+      type: object
+      required: [budget, totalCost, reduction, remainingBudget, actions, curve]
+      properties:
+        budget: { type: number }
+        totalCost: { type: number }
+        reduction: { type: number }
+        remainingBudget: { type: number }
+        actions:
+          type: array
+          items: { $ref: "#/components/schemas/MitigationAction" }
+        curve:
+          type: array
+          items: { $ref: "#/components/schemas/CurvePoint" }
+    ComplianceFramework:
+      type: object
+      required: [id, name, version, posture, requirements, gaps]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        version: { type: string }
+        posture: { type: number }
+        requirements:
+          type: array
+          items: { $ref: "#/components/schemas/ComplianceRequirement" }
+        gaps: { type: integer }
+    ComplianceRequirement:
+      type: object
+      required: [code, title, control, status, evidence, lastVerified, gap, remediation]
+      properties:
+        code: { type: string }
+        title: { type: string }
+        control: { type: string }
+        status: { type: string }
+        evidence: { type: string }
+        lastVerified: { type: string }
+        gap: { type: string }
+        remediation: { type: string }
+    IngestEventInput:
+      type: object
+      required: [type]
+      properties:
+        type: { type: string }
+        assetId: { type: string }
+        severity: { type: string }
+    IngestResult:
+      type: object
+      required: [message, eventType, ealBefore, ealAfter, delta, driver, timeline]
+      properties:
+        message: { type: string }
+        eventType: { type: string }
+        ealBefore: { type: number }
+        ealAfter: { type: number }
+        delta: { type: number }
+        driver: { $ref: "#/components/schemas/RiskDriver" }
+        timeline:
+          type: array
+          items: { type: string }
+    CopilotInput:
+      type: object
+      required: [question]
+      properties:
+        question: { type: string, minLength: 1 }
+    CopilotResponse:
+      type: object
+      required: [answer, citations, tool]
+      properties:
+        answer: { type: string }
+        citations:
+          type: array
+          items: { type: string }
+        tool: { type: string }
+    Notification:
+      type: object
+      required: [id, type, title, detail, time]
+      properties:
+        id: { type: string }
+        type: { type: string }
+        title: { type: string }
+        detail: { type: string }
+        time: { type: string }
